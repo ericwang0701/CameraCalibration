@@ -6,6 +6,7 @@ import os
 import pickle
 import json
 import pandas as pd
+import argparse
 
 aruco = cv2.aruco
 np.set_printoptions(precision=3)
@@ -30,20 +31,6 @@ squareNumY = int(df_board_configs.loc['num_squares_y'])
 boardSizeX = int(df_board_configs.loc['board_size_x'])
 boardSizeY = int(df_board_configs.loc['board_size_y'])
 
-# calibration
-calib_image_dirpath = os.path.join(os.getcwd(), "../pictures/tello/")
-calib_image_format = "png"
-calib_result_save_format = "pkl"
-calib_result_savedirpath = os.path.join(os.getcwd(), "../result")
-calib_result_savename = "camera_param"
-show_calib_result_on = True
-decimation_interval = 2 # 1 means not applied
-
-# test the calibration result
-undistortion_on = True
-undistort_result_dirpath = \
-    os.path.join(calib_image_dirpath, "undistort_result/")
-param_filepath = os.path.join(os.getcwd(), "../result/camera_param.pkl")
 
 def get_file_paths(file_dirpath, file_ext):
     path = os.path.join(file_dirpath, '*.'+file_ext)
@@ -243,5 +230,29 @@ def board_calibration(undistortion_on_flag=False,
 
 
 if __name__ == '__main__':
+	
+	parser = argparse.ArgumentParser()
+    parser.add_argument('--image_dir', type=str, help='calibration images folder')
+    parser.add_argument('--image_format', type=str, default='png', help='calibration images format')
+    parser.add_argument('--result_format', type=str, default='pkl', choices=['pkl', 'json'] help='calib result format')
+    parser.add_argument('--show_result', action='store_true')
+    parser.add_argument('--undistortion_on', action='store_true')
+
+    args = parser.parse_args()
+    calib_image_dirpath = args.image_dir
+    calib_image_format = args.image_format
+	calib_result_save_format = args.result_format
+	show_calib_result_on = args.show_result
+	undistortion_on = args.undistortion_on
+
+	#internal settings
+	calib_result_savedirpath = os.path.join(os.getcwd(), "../result")
+	calib_result_savename = "camera_param"
+	decimation_interval = 2 # 1 means not applied
+	
+	undistort_result_dirpath = \
+	    os.path.join(calib_image_dirpath, "undistort_result/")
+	param_filepath = os.path.join(os.getcwd(), "../result/camera_param.pkl")
+
     board_calibration(undistortion_on_flag=undistortion_on,
                       show_calib_result_on_flag=show_calib_result_on)
