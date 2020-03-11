@@ -1,6 +1,5 @@
 import cv2
 from PIL import Image
-import matplotlib.pyplot as plt
 import numpy as np
 import glob
 import os
@@ -8,9 +7,6 @@ import pickle
 import json
 import pandas as pd
 
-%matplotlib inline
-%config InlineBackend.figure_format = 'retina'
-plt.rcParams['figure.figsize'] = (10.0, 10.0)
 aruco = cv2.aruco
 np.set_printoptions(precision=3)
 
@@ -56,17 +52,6 @@ def get_file_paths(file_dirpath, file_ext):
                     for fs in file_names]
     print(file_names)
     return file_paths, file_names
-
-
-def imshow_inline(img_path="", img=None):
-    if img is None:
-        if not img_path:
-            print("Give imshow_inline an image path or an image data.")
-            return -1
-        else:
-            img = cv2.imread(img_path)
-    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-
 
 def get_board_image():
     board = aruco.CharucoBoard_create(squareNumX, 

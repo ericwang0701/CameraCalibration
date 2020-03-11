@@ -3,9 +3,6 @@ import matplotlib.pyplot as plt
 import os
 import glob
 
-%matplotlib inline
-%config InlineBackend.figure_format = 'retina'
-plt.rcParams['figure.figsize'] = (10.0, 10.0)
 aruco = cv2.aruco
 
 parameters = aruco.DetectorParameters_create()
@@ -24,17 +21,6 @@ def get_file_paths(file_dirpath, file_ext):
                     for fs in file_names]
     print(file_names)
     return file_paths, file_names
-
-
-def imshow_inline(img_path="", img=None):
-    if img is None:
-        if not img_path:
-            print("Give imshow_inline an image path or an image data.")
-            return -1
-        else:
-            img = cv2.imread(img_path)
-    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-
 
 def detect_ChArUco_board(image_paths, outimg=True):
     for image_path in image_paths:
@@ -67,7 +53,7 @@ def detect_ChArUco_board(image_paths, outimg=True):
                                       detection_result_dirname)
         if not os.path.isdir(result_dirpath):
             os.mkdir(result_dirpath)
-        imshow_inline(img=outputImage)
+        
         if outimg:
             cv2.imwrite(os.path.join(result_dirpath, image_filename), 
                         outputImage)

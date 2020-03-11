@@ -6,10 +6,6 @@ import os
 import csv
 
 aruco = cv2.aruco
-%matplotlib inline
-%config InlineBackend.figure_format = 'retina'
-plt.rcParams['figure.figsize'] = (10.0, 10.0)
-
 save_board_dirpath = os.path.join(os.getcwd(), "../board/")
 board_filename = "sample_board"
 board_save_format = ".png"
@@ -22,16 +18,6 @@ markerL = 0.024
 pixels_per_mm = 10 # for checker board image
 A4size = (210, 297)
 tb, lr = [5,5] # minimum margin (height, width) when printing in mm
-
-
-def imshow_inline(img_path="", img=None):
-    if img is None:
-        if not img_path:
-            print("Give imshow_inline an image path or an image data.")
-            return -1
-        else:
-            img = cv2.imread(img_path)
-    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
 
 def max_within_upper(num, upper):
@@ -103,7 +89,6 @@ def create_ChArUco_board_in_A4size(board_name, outcsv=True):
     board_filepath = os.path.join(save_board_dirpath, board_name)
     cv2.imwrite(board_filepath, 
                 boardImage_margin)
-    imshow_inline(img_path=board_filepath)
     
     if outcsv:
         # remove the extention from the board_name
