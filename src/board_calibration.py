@@ -65,7 +65,7 @@ def get_calibration_images(calib_img_paths, resimgs=False):
             continue
             # break
         if resimgs:
-            calibImage = cv2.resize(calibImage, (1280,720))
+            calibImage = cv2.resize(calibImage, (1280,720)) # dont' resize
         calibImages.append(calibImage)
     return calibImages
 
@@ -216,9 +216,10 @@ def board_calibration(undistortion_on_flag=False,
 
     calib_image_paths, calib_image_names = \
         get_file_paths(calib_image_dirpath, calib_image_format)
+    #use default resoultion 1920x1080
     res = calibrate_with_ChArUco_board(
         get_calibration_images(calib_image_paths, 
-                               resimgs=True),
+                               resimgs=false),
         show_calib_result_on_flag=show_calib_result_on_flag)
     
     if res < 0:
