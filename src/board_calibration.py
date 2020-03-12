@@ -219,7 +219,7 @@ def board_calibration(undistortion_on_flag=False,
     #use default resoultion 1920x1080
     res = calibrate_with_ChArUco_board(
         get_calibration_images(calib_image_paths, 
-                               resimgs=false),
+                               resimgs=False),
         show_calib_result_on_flag=show_calib_result_on_flag)
     
     if res < 0:
